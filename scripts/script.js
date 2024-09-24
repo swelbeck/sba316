@@ -10,7 +10,8 @@
 
 const tList = document.getElementById("taskList");
 const tInput = document.getElementById("taskInput");
-const tBtn = document.getElementById("addTaskBtn");
+// const tBtn = document.getElementById("addTaskBtn");
+const tBtn = document.getElementById("submitBtn");
 const container = document.getElementById("toDoContainer");
 
 // Adding style elements
@@ -25,47 +26,42 @@ const cols = 2;
 
 const app = document.getElementById("taskTable");
 const table = document.createElement("table");
-const tableHead = document.createElement(`thead`)
-table.appendChild(tableHead)
+const tableHead = document.createElement(`thead`);
+table.appendChild(tableHead);
 app.appendChild(table);
 // console.log(table);
 // console.log(table.rows);
-console.log(table)
-tableHead.textContent = `Hello`;
+console.log(table);
+tableHead.textContent = `Task List`;
 // if (table.rows.length == 0 && c == 0) {
 //       td.textContent = "Task Name";
 //     } else if (table.rows.length == 0 && c == 1) {
 //       td.textContent = "Due Date";}
+
 // Event listener for Task button
-tBtn.addEventListener(`click`, addTask);
-tBtn.addEventListener(`keydown`, addTask);
+tBtn.addEventListener(`click`, handleClick);
+// tBtn.addEventListener(`submit`, handleClick);
+addEventListener(`keydown`, (handleClick) => {});
+onkeydown = (handleClick) => {};
 
 // The function to handle adding new tasks.
-function addTask(event) {
+// function handleEnter(event){
+
+// }
+
+function handleClick(event) {
   const newTask = tInput.value;
-  //   console.log(newTask);
 
   // If task input is empty, don't do anything
   if (newTask === "") return;
-
-  //Create list element
-  const newListItem = document.createElement("li");
-  // Set new list item to the entered task
-  newListItem.textContent = newTask;
-  // Add each list item to the UL
-  tList.appendChild(newListItem);
 
   //Creating a new row in the table
   const tr = document.createElement("tr");
   tr.style.borderBottom = `1px solid black`; // Not working at the moment
 
-  // for (let r = 0; r < rows; r++) {
   for (let c = 0; c < cols; c++) {
-    // console.log(cols, c);
     const td = document.createElement("td");
-    // console.log(table)
-    // console.log(table.rows)
-    // console.log(table.rows.length);
+
     if (c == 0) {
       td.textContent = newTask;
     }
