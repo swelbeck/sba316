@@ -27,6 +27,7 @@ const cols = 2;
 const app = document.getElementById("taskTable");
 const table = document.createElement("table");
 const tableHead = document.createElement(`thead`);
+const tableBody = document.createElement(`tbody`)
 const headerRow = tableHead.insertRow(0);
 
 // Add Task Name heading
@@ -39,13 +40,21 @@ const dateCell = headerRow.insertCell(1);
 dateCell.textContent = `Due Date`;
 console.log(dateCell.parentElement)
 table.appendChild(tableHead);
+table.appendChild(tableBody)
 app.appendChild(table);
-console.log(table);
+console.log(table.nodeValue);
 
 // Event listener for Task button
 tBtn.addEventListener(`click`, handleClick);
 // Event listener for Enter key
 tInput.addEventListener(`keydown`, handleEnterBtn);
+
+
+table.lastChild.addEventListener("click", (e) => {
+
+  e.target.classList.toggle("strikethrough");
+});
+
 
 // The function to handle adding new tasks.
 function handleEnterBtn(event) {
@@ -76,7 +85,7 @@ function handleClick() {
     tr.appendChild(td);
   }
 
-  table.appendChild(tr);
+  tableBody.appendChild(tr);
   tInput.value = "";
   tInput.focus();
 }

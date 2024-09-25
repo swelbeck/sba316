@@ -19,3 +19,4 @@ Clone this repo to your computer and open the `index.html` file in a live server
 ## Acknowledgements
 
 - [W3Schools](https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp)
+- [W3Schools](https://www.w3schools.com/jsref/met_table_createthead.asp)
