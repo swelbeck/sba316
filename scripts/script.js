@@ -33,19 +33,19 @@ const headerRow = tableHead.insertRow(0);
 // Add Task Name heading
 const nameCell = headerRow.insertCell(0);
 nameCell.textContent = `Task Name`;
-console.log(nameCell.parentNode)
+// console.log(nameCell.parentNode)
 
 // Add Due Date heading
 const dateCell = headerRow.insertCell(1);
 dateCell.textContent = `Due Date`;
-console.log(dateCell.parentElement)
+// console.log(dateCell.parentElement)
 table.appendChild(tableHead);
 table.appendChild(tableBody)
 app.appendChild(table);
-console.log(table.nodeValue);
+// console.log(table.nodeValue);
 
 // Event listener for Task button
-tBtn.addEventListener(`click`, handleClick);
+tBtn.addEventListener(`click`, addTask);
 // Event listener for Enter key
 tInput.addEventListener(`keydown`, handleEnterBtn);
 
@@ -67,7 +67,7 @@ function handleEnterBtn(event) {
   }
 }
 
-function handleClick() {
+function addTask() {
   const newTask = tInput.value;
   // If task input is empty, don't do anything
   if (newTask === "") return;
@@ -84,6 +84,14 @@ function handleClick() {
     }
     tr.appendChild(td);
   }
+  const dateInput = document.createElement('input')
+  dateInput.type = `date`
+  dateInput.classList = `dueDate`
+  tr.lastChild.appendChild(dateInput)
+ 
+
+  console.log(dateInput)
+  // tr.lastChild.textContent = dateInput
 
   tableBody.appendChild(tr);
   tInput.value = "";
