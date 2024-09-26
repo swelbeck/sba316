@@ -6,10 +6,10 @@
 
 // When task is completed, strikethrough and move to bottom of the list...
 // OR If I can figure it out, hide completed tasks (invisible)
-// If Due date passes, make due date color red, and alert user
+// ***If Due date passes, make due date color red, and alert user
 // Delete task button/icon
-
-// Add validation where if the item is marked completed - they should input the completion date
+// Add prompt that checks if the user is sure about deleting an item.
+// ***Add validation where if the item is marked completed - they should input the completion date
 
 const tForm = document.getElementById("taskForm");
 const tInput = document.getElementById("taskInput");
@@ -62,6 +62,8 @@ function handleSubmit(event) {
   // Clear the input and focus it for new input
   tInput.value = "";
   tInput.focus();
+
+  almostDueAlert();
 }
 
 tableBody.addEventListener("click", (e) => {
@@ -79,10 +81,26 @@ tableBody.addEventListener("click", (e) => {
 
     // Toggle the strikethrough class on the text
     text.classList.toggle("strikethrough");
+
+    //
+    const row = e.target.closest("tr");
+
+    tableBody.removeChild(row);
+    tableBody.appendChild(row);
+  }
+
+  const trashIcon = e.target.closest(".trash-icon");
+  if (trashIcon) {
+    const rowRemoved = trashIcon.closest("tr");
+
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      rowRemoved.remove();
+    }
   }
 });
 
 function addTask(newTask) {
+  const fragment = document.createDocumentFragment();
   // Create a new row in the table
   const tr = document.createElement("tr");
   tr.style.borderBottom = `1px solid lightgrey`;
@@ -142,7 +160,8 @@ function addTask(newTask) {
     tr.appendChild(td);
   }
 
-  tableBody.appendChild(tr);
+  fragment.appendChild(tr);
+  tableBody.appendChild(fragment);
 }
 
 function handleDate(evt) {
@@ -155,20 +174,33 @@ function handleDate(evt) {
   // console.log("Today's date: ", todaysDate.toString());
 
   if (dateEntered.getTime() < todaysDate.getTime()) {
+    console.log(typeof dateEntered.getTime());
+    evt.target.style.color = `red`;
     window.alert(`This date has passed, please enter a different date.`);
+  } else {
+    evt.target.style.color = `black`;
   }
 }
 
-function pastDueAlert() {
+// Call pastDueAlert on page load
+window.onload = function () {
+  almostDueAlert();
+};
+
+function almostDueAlert() {
   const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
   const rows = tableBody.querySelectorAll("tr");
-  console.log(rows);
+
   rows.forEach((row) => {
+    console.log(row);
     const dateInput = row.cells[1].querySelector("input");
     if (dateInput && dateInput.value) {
       const taskDueDate = new Date(dateInput.value);
-      const tomorrowsDate = today.setDate(today.getDate() + 1);
-      if (taskDueDate.toDateString() === tomorrowsDate.toDateString()) {
+
+      if (taskDueDate.toDateString() === tomorrow.toDateString()) {
         window.alert(`Your task is due tomorrow!`);
       }
     }
