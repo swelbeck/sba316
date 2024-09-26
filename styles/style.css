@@ -1,12 +1,39 @@
+html {
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+
+#toDoContainer {
+    border-radius: 20px;
+    box-shadow: 10px 10px 10px lightgrey;
+}
+
+h1, thead {
+    color: dodgerblue;
+    /* box-shadow: 5px 5px 5px salmon; */
+}
+
+/* thead{
+    margin-bottom: 20px;
+}
+tbody{
+    margin-top: 20px;
+} */
+
 table {
   border-collapse: collapse;
 }
 
-.fa-check-circle {
+.bi-check2-square {
   color: rgb(0, 190, 0);
+  font-size: 40px;
 }
 
 .strikethrough {
   text-decoration: line-through;
-  /* color: #ccc !important; */
 }
+
+.trash-icon:hover{
+text-shadow: 1px 1px 1px rgb(166, 78, 78);
+}
+

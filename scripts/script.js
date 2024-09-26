@@ -1,31 +1,33 @@
 // Create a To Do List/Task List where there are two columns
 // Column One: Task
 // Column Two: Due Date
-// Add circle or box, that can be checked off to mark a completed task
-// When task is completed, strikethrough and move to bottom of the list...
-// If I can figure it out, hide completed tasks (invisible)
-// If Due date passes, make due date color red, and alert user
 // Adding a new task should create a row in the table
+// Add circle or box, that can be checked off to mark a completed task
+
+// When task is completed, strikethrough and move to bottom of the list...
+// OR If I can figure it out, hide completed tasks (invisible)
+// If Due date passes, make due date color red, and alert user
 // Delete task button/icon
 
-// const tList = document.getElementById("taskList");
+// Add validation where if the item is marked completed - they should input the completion date
+
+const tForm = document.getElementById("taskForm");
 const tInput = document.getElementById("taskInput");
 const tBtn = document.querySelector("#addTaskBtn");
+const tableContainer = document.getElementById("taskTable");
 // const tBtn = document.getElementById("submitBtn");
 const container = document.getElementById("toDoContainer");
 
 // Adding style elements
-container.style.border = `2px solid black`;
-container.style.backgroundColor = `lightblue`;
+container.style.border = `2px solid lightgrey`;
+container.style.backgroundColor = `ghostwhite`;
 container.style.padding = `10px`;
 container.style.margin = `10px 50px`;
 container.style.textAlign = `center`;
 container.firstElementChild.style.marginBottom = `40px`;
 
-const rows = 10;
+// Create table structure
 const cols = 2;
-
-const app = document.getElementById("taskTable");
 const table = document.createElement("table");
 const tableHead = document.createElement(`thead`);
 const tableBody = document.createElement(`tbody`);
@@ -44,73 +46,113 @@ dateCell.style.width = `30%`;
 
 table.appendChild(tableHead);
 table.appendChild(tableBody);
-app.appendChild(table);
+tableContainer.appendChild(table);
 
 table.style.margin = `0 auto`;
 
-// Event listener for Task button
-tBtn.addEventListener(`click`, addTask);
-// Event listener for Enter key
-tInput.addEventListener(`keydown`, handleEnterBtn);
+// Event listener for Task form
+tForm.addEventListener(`submit`, handleSubmit);
 
-table.lastChild.addEventListener("click", (e) => {
-  e.target.classList.toggle("strikethrough");
-});
+function handleSubmit(event) {
+  event.preventDefault();
 
-// The function to handle adding new tasks.
-function handleEnterBtn(event) {
-  // If the user presses the "Enter" key on the keyboard
-  if (event.key === "Enter") {
-    // Cancel the default action, if needed
-    event.preventDefault();
-    // Trigger the button element with a click
-    document.getElementById("addTaskBtn").click();
-  }
+  const newTask = tInput.value;
+  addTask(newTask);
+
+  // Clear the input and focus it for new input
+  tInput.value = "";
+  tInput.focus();
 }
 
-function addTask() {
-  const newTask = tInput.value;
-  // If task input is empty, don't do anything
-  if (newTask === "") return;
+tableBody.addEventListener("click", (e) => {
+  // Check if the clicked target or any of its parents has the class 'taskItemDivLeft'
+  const taskItemDivLeft = e.target.closest(".taskItemDivLeft");
 
+  if (taskItemDivLeft) {
+    // Find the icon within the clicked task item
+    const icon = taskItemDivLeft.querySelector(".task-icon");
+    const text = taskItemDivLeft.querySelector("p");
+
+    // Toggle the icon classes
+    icon.classList.toggle("bi-square");
+    icon.classList.toggle("bi-check2-square");
+
+    // Toggle the strikethrough class on the text
+    text.classList.toggle("strikethrough");
+  }
+});
+
+function addTask(newTask) {
   // Create a new row in the table
   const tr = document.createElement("tr");
-  tr.style.borderBottom = `1px solid black`;
+  tr.style.borderBottom = `1px solid lightgrey`;
 
   for (let c = 0; c < cols; c++) {
     const td = document.createElement("td");
 
+    // Add tasks in the first column of table
     if (c == 0) {
-      td.textContent = newTask;
+      const taskItemContainerLeft = document.createElement("div");
+      taskItemContainerLeft.setAttribute(`class`, `taskItemDivLeft`);
+      taskItemContainerLeft.style.display = "flex";
+      taskItemContainerLeft.style.alignItems = "center";
+      taskItemContainerLeft.style.gap = "10px";
+
+      const i = document.createElement("i");
+      i.classList = `bi bi-square task-icon`;
+      i.style.fontSize = "20px";
+
+      const p = document.createElement("p");
+      p.textContent = newTask;
+      p.style.margin = `0`;
+      p.style.textAlign = `center`;
+
+      taskItemContainerLeft.appendChild(i);
+      taskItemContainerLeft.appendChild(p);
+
+      td.appendChild(taskItemContainerLeft);
       td.style.width = `70%`;
     }
+
+    // Add date inputs in second column of each row
     if (c == 1) {
-      // Create a new date input for each row
+      const taskItemContainerRight = document.createElement("div");
+      taskItemContainerRight.setAttribute(`class`, `taskItemDivRight`);
+      taskItemContainerRight.style.display = "flex";
+      taskItemContainerRight.style.alignItems = "center";
+      taskItemContainerRight.style.gap = "10px";
+
+      const ic = document.createElement("i");
+      ic.classList = `bi bi-trash trash-icon`;
+      ic.style.fontSize = "20px";
+      ic.style.color = `red`;
+
       const dateInput = document.createElement("input");
       dateInput.type = `date`;
       dateInput.classList = `dueDate`;
 
+      taskItemContainerRight.appendChild(dateInput);
+      taskItemContainerRight.appendChild(ic);
+
       // Attach the date input to the cell and event listener
       td.style.width = `30%`;
-      td.appendChild(dateInput);
+      td.appendChild(taskItemContainerRight);
       dateInput.addEventListener(`change`, handleDate);
     }
-
     tr.appendChild(td);
   }
 
   tableBody.appendChild(tr);
-  tInput.value = "";
-  tInput.focus();
 }
 
 function handleDate(evt) {
   let input = evt.target.value;
   let dateEntered = new Date(input);
-  dateEntered.setHours(0, 0, 0, 0);
 
   const todaysDate = new Date();
-  todaysDate.setHours(0, 0, 0, 0);
+
+  // console.log("Date entered: ", dateEntered.toString());
+  // console.log("Today's date: ", todaysDate.toString());
 
   if (dateEntered.getTime() < todaysDate.getTime()) {
     window.alert(`This date has passed, please enter a different date.`);
@@ -120,13 +162,13 @@ function handleDate(evt) {
 function pastDueAlert() {
   const today = new Date();
   const rows = tableBody.querySelectorAll("tr");
-
+  console.log(rows);
   rows.forEach((row) => {
-    const dateInput = row.cells[1].querySelector("input"); // Get the date input from the second cell
+    const dateInput = row.cells[1].querySelector("input");
     if (dateInput && dateInput.value) {
-      const taskDueDate = new Date(dateInput.value); // Convert due date to Date object
+      const taskDueDate = new Date(dateInput.value);
       const tomorrowsDate = today.setDate(today.getDate() + 1);
-      if (taskDueDate === tomorrowsDate) {
+      if (taskDueDate.toDateString() === tomorrowsDate.toDateString()) {
         window.alert(`Your task is due tomorrow!`);
       }
     }
