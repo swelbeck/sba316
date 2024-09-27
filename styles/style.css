@@ -17,7 +17,6 @@ body {
 #toDoContainer {
   border-radius: 20px;
   box-shadow: 10px 10px 10px lightgrey;
-
 }
 
 h1,
@@ -27,9 +26,9 @@ thead {
 }
 
 form {
-    display: flex;
-    gap: 10px;
-    align-content: center;
+  display: flex;
+  gap: 10px;
+  align-content: center;
 }
 
 form input[type="text"] {
@@ -56,18 +55,24 @@ button {
 }
 
 thead {
-    border-bottom: 10px solid ghostwhite;
+  border-bottom: 10px solid rgba(248, 248, 255, 0.681);
 }
-
-
 
 table {
   border-collapse: collapse;
 }
 
+input[type="date"] {
+  background: transparent;
+  color: ghostwhite;
+  border: 1px solid ghostwhite;
+  border-radius: 5px;
+  padding: 2px 2px;
+  font-size: 14px;
+}
+
 .bi-check2-square {
   color: rgb(0, 190, 0);
-  /* font-size: 40px; */
 }
 
 .strikethrough {

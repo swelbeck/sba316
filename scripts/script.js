@@ -20,7 +20,7 @@ const container = document.getElementById("toDoContainer");
 
 // Adding style elements
 container.style.border = `2px solid lightgrey`;
-container.style.backgroundColor = `ghostwhite`;
+container.style.backgroundColor = `rgba(248, 248, 255, 0.95)`;
 container.style.padding = `40px`;
 container.style.alignSelf = `center`;
 container.style.minWidth = `400px`;
@@ -81,6 +81,7 @@ tableBody.addEventListener("click", (e) => {
     // Toggle the icon classes
     icon.classList.toggle("bi-square");
     icon.classList.toggle("bi-check2-square");
+    // icon.style.fontSize = "25px";
 
     // Toggle the strikethrough class on the text
     text.classList.toggle("strikethrough");
@@ -197,14 +198,14 @@ function handleDate(evt) {
   todaysDate.setHours(0, 0, 0, 0); // Set to midnight
 
   if (dateEntered < todaysDate) {
-    console.log("Entered date is in the past.");
+    // console.log("Entered date is in the past.");
     dateInput.style.color = `red`;
     window.alert(`This date has passed, please enter a different date.`);
   } else if (dateEntered.toDateString() === todaysDate.toDateString()) {
-    console.log("Entered date is today.");
+    // console.log("Entered date is today.");
     dateInput.style.color = `black`;
   } else {
-    console.log("Entered date is in the future.");
+    // console.log("Entered date is in the future.");
     dateInput.style.color = `black`;
   }
 }
