@@ -1,25 +1,65 @@
 html {
-font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 
+body {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-image: url(https://images.unsplash.com/photo-1578852612716-854e527abf2e?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-color: rgba(255,255,255,0.6); */
+  background-blend-mode: lighten;
 }
 
 #toDoContainer {
-    border-radius: 20px;
-    box-shadow: 10px 10px 10px lightgrey;
-    
+  border-radius: 20px;
+  box-shadow: 10px 10px 10px lightgrey;
+
 }
 
-h1, thead {
-    color: dodgerblue;
-    /* box-shadow: 5px 5px 5px salmon; */
+h1,
+thead {
+  color: dodgerblue;
+  /* box-shadow: 5px 5px 5px salmon; */
 }
 
-/* thead{
-    margin-bottom: 20px;
+form {
+    display: flex;
+    gap: 10px;
+    align-content: center;
 }
-tbody{
-    margin-top: 20px;
-} */
+
+form input[type="text"] {
+  width: 300px;
+  margin-bottom: 5px;
+  font-size: 20px;
+  border: 0;
+  border-radius: 5px;
+  padding: 7px 9px;
+  background-color: rgba(30, 143, 255, 0.401);
+}
+
+button {
+  margin-bottom: 7px;
+  background-color: salmon;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 10px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+thead {
+    border-bottom: 10px solid ghostwhite;
+}
+
+
 
 table {
   border-collapse: collapse;
@@ -34,7 +74,6 @@ table {
   text-decoration: line-through;
 }
 
-.trash-icon:hover{
-text-shadow: 1px 1px 2px rgba(246, 0, 0, 0.832);
+.trash-icon:hover {
+  text-shadow: 1px 1px 2px rgba(246, 0, 0, 0.832);
 }
-

@@ -21,8 +21,11 @@ const container = document.getElementById("toDoContainer");
 // Adding style elements
 container.style.border = `2px solid lightgrey`;
 container.style.backgroundColor = `ghostwhite`;
-container.style.padding = `10px`;
-container.style.margin = `10px 50px`;
+container.style.padding = `40px`;
+container.style.alignSelf = `center`;
+container.style.minWidth = `400px`;
+container.style.minHeight = `500px`;
+container.style.margin = `60px auto`;
 container.style.textAlign = `center`;
 container.firstElementChild.style.marginBottom = `40px`;
 
@@ -219,7 +222,7 @@ function almostDueAlert() {
   const rows = tableBody.querySelectorAll("tr");
 
   rows.forEach((row) => {
-    console.log(row);
+    // console.log(row);
     const dateInput = row.cells[1].querySelector("input");
     if (dateInput && dateInput.value) {
       const taskDueDate = new Date(dateInput.value);
