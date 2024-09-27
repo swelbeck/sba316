@@ -83,10 +83,21 @@ tableBody.addEventListener("click", (e) => {
     text.classList.toggle("strikethrough");
 
     //
-    const row = e.target.closest("tr");
+    if (text.classList.contains("strikethrough")) {
+      const row = e.target.closest("tr");
 
-    tableBody.removeChild(row);
-    tableBody.appendChild(row);
+      // Move row to the bottom of table when checked
+      setTimeout(() => {
+        tableBody.removeChild(row);
+        tableBody.appendChild(row);
+      }, 500);
+    }
+    // else {
+    //   // Move row back to the top of the table
+    //   setTimeout(() => {
+    //     tableBody.prepend(row);
+    //   }, 500);
+    // }
   }
 
   const trashIcon = e.target.closest(".trash-icon");
@@ -165,20 +176,33 @@ function addTask(newTask) {
 }
 
 function handleDate(evt) {
-  let input = evt.target.value;
-  let dateEntered = new Date(input);
+  const dateInput = evt.target;
+  const inputValue = dateInput.value;
 
-  const todaysDate = new Date();
+  // Create a Date object using the input value as local time
+  const dateParts = inputValue.split("-");
+  const dateEntered = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
 
-  // console.log("Date entered: ", dateEntered.toString());
-  // console.log("Today's date: ", todaysDate.toString());
-
-  if (dateEntered.getTime() < todaysDate.getTime()) {
-    console.log(typeof dateEntered.getTime());
+  // Check if the date is valid
+  if (isNaN(dateEntered.getTime())) {
     evt.target.style.color = `red`;
+    window.alert(`Please enter a valid date.`);
+    return;
+  }
+  dateEntered.setHours(0, 0, 0, 0);
+  const todaysDate = new Date();
+  todaysDate.setHours(0, 0, 0, 0); // Set to midnight
+
+  if (dateEntered < todaysDate) {
+    console.log("Entered date is in the past.");
+    dateInput.style.color = `red`;
     window.alert(`This date has passed, please enter a different date.`);
+  } else if (dateEntered.toDateString() === todaysDate.toDateString()) {
+    console.log("Entered date is today.");
+    dateInput.style.color = `black`;
   } else {
-    evt.target.style.color = `black`;
+    console.log("Entered date is in the future.");
+    dateInput.style.color = `black`;
   }
 }
 
